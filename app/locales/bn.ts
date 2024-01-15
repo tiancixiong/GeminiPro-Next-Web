@@ -53,6 +53,7 @@ const bn: PartialLocaleType = {
       Masks: "মাস্কগুলি",
       Clear: "সংশ্লিষ্টতাবদ্ধকরণ পরিষ্কার করুন",
       Settings: "সেটিংস",
+      Image: "চিত্র নির্বাচন করুন",
     },
     Rename: "চ্যাট পুনঃনামকরণ করুন",
     Typing: "টাইপিং...",

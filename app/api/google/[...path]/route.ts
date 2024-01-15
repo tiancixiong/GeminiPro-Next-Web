@@ -39,12 +39,12 @@ async function handle(
     10 * 60 * 1000,
   );
 
-  const authResult = auth(req, ModelProvider.GeminiPro);
-  if (authResult.error) {
-    return NextResponse.json(authResult, {
-      status: 401,
-    });
-  }
+  // const authResult = auth(req, ModelProvider.GeminiPro);
+  // if (authResult.error) {
+  //   return NextResponse.json(authResult, {
+  //     status: 401,
+  //   });
+  // }
 
   const bearToken = req.headers.get("Authorization") ?? "";
   const token = bearToken.trim().replaceAll("Bearer ", "").trim();

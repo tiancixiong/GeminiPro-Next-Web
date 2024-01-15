@@ -65,6 +65,7 @@ const en: LocaleType = {
       Masks: "Masks",
       Clear: "Clear Context",
       Settings: "Settings",
+      Image: "Choose Image",
     },
     Rename: "Rename Chat",
     Typing: "Typing…",
@@ -111,6 +112,9 @@ const en: LocaleType = {
     All: "Select All",
     Latest: "Select Latest",
     Clear: "Clear",
+  },
+  Gemini: {
+    SelectImgMax: (max: number) => `Select up to ${max} images`,
   },
   Memory: {
     Title: "Memory Prompt",

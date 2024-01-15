@@ -45,6 +45,7 @@ const fr: PartialLocaleType = {
       Masks: "Assistants",
       Clear: "Effacer le contexte",
       Settings: "Réglages",
+      Image: "Choisir une image",
     },
     Rename: "Renommer la conversation",
     Typing: "En train d'écrire…",

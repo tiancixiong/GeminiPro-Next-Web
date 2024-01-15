@@ -19,6 +19,11 @@ import { estimateTokenLength } from "../utils/token";
 import { nanoid } from "nanoid";
 import { createPersistStore } from "../utils/store";
 
+export type AttachFile = {
+  filename: string;
+  base64: string;
+};
+
 export type ChatMessage = RequestMessage & {
   date: string;
   streaming?: boolean;
@@ -267,7 +272,7 @@ export const useChatStore = createPersistStore(
         get().summarizeSession();
       },
 
-      async onUserInput(content: string) {
+      async onUserInput(content: string, files: AttachFile[] = []) {
         const session = get().currentSession();
         const modelConfig = session.mask.modelConfig;
 
@@ -277,6 +282,7 @@ export const useChatStore = createPersistStore(
         const userMessage: ChatMessage = createMessage({
           role: "user",
           content: userContent,
+          attachFiles: files,
         });
 
         const botMessage: ChatMessage = createMessage({
@@ -287,7 +293,22 @@ export const useChatStore = createPersistStore(
 
         // get recent messages
         const recentMessages = get().getMessagesWithMemory();
-        const sendMessages = recentMessages.concat(userMessage);
+
+        let sendMessages: ChatMessage[];
+        const allFiles = recentMessages
+          .flatMap((m) => m.attachFiles ?? [])
+          .concat(files);
+        if (allFiles.length > 0) {
+          sendMessages = [
+            {
+              ...userMessage,
+              attachFiles: allFiles,
+            },
+          ];
+        } else {
+          sendMessages = recentMessages.concat(userMessage);
+        }
+
         const messageIndex = get().currentSession().messages.length + 1;
 
         // save user's and bot's message

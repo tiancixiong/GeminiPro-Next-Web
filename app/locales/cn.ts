@@ -63,6 +63,7 @@ const cn = {
       Masks: "所有面具",
       Clear: "清除聊天",
       Settings: "对话设置",
+      Image: "选择图片",
     },
     Rename: "重命名对话",
     Typing: "正在输入…",
@@ -103,6 +104,9 @@ const cn = {
       Toast: "正在生成截图",
       Modal: "长按或右键保存图片",
     },
+  },
+  Gemini: {
+    SelectImgMax: (max: number) => `最多可选择 ${max} 张图片`,
   },
   Select: {
     Search: "搜索消息",

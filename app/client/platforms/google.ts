@@ -20,27 +20,66 @@ export class GeminiProApi implements LLMApi {
       ""
     );
   }
+
   async chat(options: ChatOptions): Promise<void> {
     const apiClient = this;
-    const messages = options.messages.map((v) => ({
-      role: v.role.replace("assistant", "model").replace("system", "user"),
-      parts: [{ text: v.content }],
-    }));
+    let is_text_image = false;
+    const messages = options.messages.map(
+      (v) => {
+        if (v.attachFiles && v.attachFiles.length > 0) {
+          is_text_image = true;
+          let base64 = v.attachFiles[0].base64;
+          const regex = /^data:(.*?);base64,/gi;
+          let minetype = "image/jpeg";
+          let m = regex.exec(base64);
+          if (m !== null) {
+            // The result can be accessed through the `m`-variable.
+            minetype = m[1];
+            console.log("minetype:", minetype);
+            base64 = base64.substring(("data:" + minetype + ";base64,").length);
+          }
+          return {
+            role: v.role
+              .replace("assistant", "model")
+              .replace("system", "user"),
+            parts: [
+              { text: v.content },
+              {
+                inline_data: {
+                  mime_type: minetype,
+                  data: base64,
+                },
+              },
+            ],
+          };
+        } else {
+          return {
+            role: v.role
+              .replace("assistant", "model")
+              .replace("system", "user"),
+            parts: [{ text: v.content }],
+          };
+        }
+      },
+      // }
+    );
 
     // google requires that role in neighboring messages must not be the same
-    for (let i = 0; i < messages.length - 1; ) {
-      // Check if current and next item both have the role "model"
-      if (messages[i].role === messages[i + 1].role) {
-        // Concatenate the 'parts' of the current and next item
-        messages[i].parts = messages[i].parts.concat(messages[i + 1].parts);
-        // Remove the next item
-        messages.splice(i + 1, 1);
-      } else {
-        // Move to the next item
-        i++;
+    if (!is_text_image) {
+      //Multiturn chat is not enabled for models/gemini-pro-vision
+      for (let i = 0; i < messages.length - 1; ) {
+        // Check if current and next item both have the role "model"
+        if (messages[i].role === messages[i + 1].role) {
+          // Concatenate the 'parts' of the current and next item
+          messages[i].parts = messages[i].parts.concat(messages[i + 1].parts);
+          // Remove the next item
+          messages.splice(i + 1, 1);
+        } else {
+          // Move to the next item
+          i++;
+        }
       }
     }
-
     const modelConfig = {
       ...useAppConfig.getState().modelConfig,
       ...useChatStore.getState().currentSession().mask.modelConfig,
@@ -83,9 +122,13 @@ export class GeminiProApi implements LLMApi {
 
     const shouldStream = !!options.config.stream;
     const controller = new AbortController();
+    console.log("is_text_image:", is_text_image);
     options.onController?.(controller);
     try {
-      const chatPath = this.path(Google.ChatPath);
+      let chatPath = this.path(Google.ChatPath);
+      if (is_text_image) {
+        chatPath = chatPath.replace("gemini-pro", "gemini-pro-vision");
+      }
       const chatPayload = {
         method: "POST",
         body: JSON.stringify(requestPayload),
