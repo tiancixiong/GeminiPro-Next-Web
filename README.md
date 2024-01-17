@@ -81,25 +81,6 @@ Google Gemini Pro Api Key.
 
 Google Gemini Pro Api Url.
 
-### `HIDE_USER_API_KEY` (optional)
-
-> Default: Empty
-
-If you do not want users to input their own API key, set this value to 1.
-
-
-### `ENABLE_BALANCE_QUERY` (optional)
-
-> Default: Empty
-
-If you do want users to query balance, set this value to 1, or you should set it to 0.
-
-### `DISABLE_FAST_LINK` (optional)
-
-> Default: Empty
-
-If you want to disable parse settings from url, set this to 1.
-
 ## Requirements
 
 NodeJS >= 18, Docker >= 20
@@ -144,12 +125,6 @@ If you want to add a new translation, read this [document](./docs/translation.md
 ## Donation
 
 [Buy Me a Coffee](https://www.buymeacoffee.com/xianyun)
-
-### Contributors
-
-<a href="https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=ChatGPTNextWeb/ChatGPT-Next-Web" />
-</a>
 
 ## LICENSE
 
