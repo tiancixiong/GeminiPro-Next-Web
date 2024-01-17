@@ -24,11 +24,12 @@ export class GeminiProApi implements LLMApi {
   async chat(options: ChatOptions): Promise<void> {
     const apiClient = this;
     let is_text_image = false;
+    console.log("options:", options);
     const messages = options.messages.map(
       (v) => {
         if (v.attachFiles && v.attachFiles.length > 0) {
           is_text_image = true;
-          let base64 = v.attachFiles[0].base64;
+          let base64 = v.attachFiles[v.attachFiles.length - 1].base64;
           const regex = /^data:(.*?);base64,/gi;
           let minetype = "image/jpeg";
           let m = regex.exec(base64);

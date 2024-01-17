@@ -158,7 +158,9 @@ export function SideBar(props: { className?: string }) {
     >
       <div className={styles["sidebar-header"]} data-tauri-drag-region>
         <div className={styles["sidebar-title"]} data-tauri-drag-region>
-          Gemini Pro Chat
+          <Link to={SITE_URL} target="_blank" title="Google Gemini Pro Chat">
+            Gemini Pro Chat
+          </Link>
         </div>
         <div className={styles["sidebar-sub-title"]}>
           Google Gemini Pro AI assistant.
