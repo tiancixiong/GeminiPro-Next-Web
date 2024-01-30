@@ -39,6 +39,17 @@ Google Gemini Pro 密钥.
 
 Google Gemini Pro Api Url.如果国内无法访问，请使用代理地址。
 
+## Docker 部署
+
+```shell
+docker pull lchh5/geminipro-next-web
+
+docker run -d -p 80:3000 \
+   -e GOOGLE_API_KEY=xxxx \
+   -e GOOGLE_URL=google代理地址 \
+   lchh5/geminipro-next-web
+```
+
 ## 开发
 
 点击下方按钮，开始二次开发：

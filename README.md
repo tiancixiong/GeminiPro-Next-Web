@@ -1,5 +1,4 @@
 <div align="center">
-<img src="./docs/images/head-cover.png" alt="icon"/>
 
 <h1 align="center">Gemini Pro Chat</h1>
 
@@ -107,6 +106,18 @@ GOOGLE_URL=
 yarn install
 yarn dev
 ```
+
+## Docker
+
+```shell
+docker pull lchh5/geminipro-next-web
+
+docker run -d -p 80:3000 \
+   -e GOOGLE_API_KEY=xxxx \
+   -e GOOGLE_URL=google代理地址 \
+   lchh5/geminipro-next-web
+```
+
 
 ## Deployment
 

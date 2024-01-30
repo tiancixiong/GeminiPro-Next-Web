@@ -1,16 +1,14 @@
 version: "3.9"
 services:
-  chatgpt-next-web:
+  geminipro-next-web:
     profiles: [ "no-proxy" ]
-    container_name: chatgpt-next-web
-    image: yidadaa/chatgpt-next-web
+    container_name: geminipro-next-web
+    image: lchh5/geminipro-next-web
     ports:
       - 3000:3000
     environment:
-      - OPENAI_API_KEY=$OPENAI_API_KEY
       - GOOGLE_API_KEY=$GOOGLE_API_KEY
-      - CODE=$CODE
-      - BASE_URL=$BASE_URL
+      - GOOGLE_URL=$GOOGLE_URL
       - OPENAI_ORG_ID=$OPENAI_ORG_ID
       - HIDE_USER_API_KEY=$HIDE_USER_API_KEY
       - DISABLE_GPT4=$DISABLE_GPT4
@@ -18,18 +16,16 @@ services:
       - DISABLE_FAST_LINK=$DISABLE_FAST_LINK
       - OPENAI_SB=$OPENAI_SB
 
-  chatgpt-next-web-proxy:
+  geminipro-next-web-proxy:
     profiles: [ "proxy" ]
-    container_name: chatgpt-next-web-proxy
-    image: yidadaa/chatgpt-next-web
+    container_name: geminipro-next-web-proxy
+    image: lchh5/geminipro-next-web
     ports:
       - 3000:3000
     environment:
-      - OPENAI_API_KEY=$OPENAI_API_KEY
       - GOOGLE_API_KEY=$GOOGLE_API_KEY
-      - CODE=$CODE
       - PROXY_URL=$PROXY_URL
-      - BASE_URL=$BASE_URL
+      - GOOGLE_URL=$GOOGLE_URL
       - OPENAI_ORG_ID=$OPENAI_ORG_ID
       - HIDE_USER_API_KEY=$HIDE_USER_API_KEY
       - DISABLE_GPT4=$DISABLE_GPT4
